@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story ❤️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Poppins,Arial,sans-serif;background:radial-gradient(circle at 50% 20%,rgba(255,120,180,.18),transparent 28%),linear-gradient(145deg,#63294c,#9b3156 48%,#5c1735);color:#fff}
+.app{position:relative;width:100%;height:100%;overflow:hidden}
+.bg-glow{position:absolute;inset:-20%;background:radial-gradient(circle,rgba(255,125,170,.15),transparent 45%);animation:glow 5s ease-in-out infinite alternate}
+@keyframes glow{to{transform:scale(1.25);opacity:.65}}
+.particle,.heart,.confetti{position:absolute;pointer-events:none;z-index:1}
+.particle{width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px #fff;opacity:.65;animation:drift linear infinite}
+@keyframes drift{from{transform:translateY(110vh) scale(.6);opacity:0}15%{opacity:.8}to{transform:translateY(-15vh) scale(1.3);opacity:0}}
+.heart{font-size:28px;filter:drop-shadow(0 0 8px rgba(255,100,150,.9));animation:floatHeart linear infinite}
+@keyframes floatHeart{from{transform:translateY(110vh) rotate(-15deg);opacity:0}15%{opacity:.95}to{transform:translateY(-20vh) rotate(20deg);opacity:0}}
+
+.screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transform:scale(.98);transition:opacity .55s ease,transform .55s ease;z-index:5}
+.screen.active{opacity:1;pointer-events:auto;transform:scale(1)}
+
+.card{width:min(720px,100%);min-height:66vh;border:1.5px solid rgba(255,210,230,.38);border-radius:34px;background:rgba(255,185,215,.11);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);box-shadow:0 25px 80px rgba(25,0,15,.25),inset 0 0 50px rgba(255,255,255,.035);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:42px 28px}
+
+.intro-card{min-height:55vh}
+.intro-heart{font-size:90px;margin-bottom:25px;filter:drop-shadow(0 0 25px #ff638f);animation:introPulse 1.5s ease-in-out infinite}
+@keyframes introPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.intro-title{font-family:'Dancing Script',cursive;font-size:clamp(38px,8vw,65px);margin-bottom:15px;background:linear-gradient(90deg,#ffb2ee,#ff6d86,#ffa6c9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro-sub{font-size:18px;color:#ffe5ef;margin-bottom:35px}
+.intro-btn{animation:introButtonGlow 2s ease-in-out infinite}
+@keyframes introButtonGlow{0%,100%{box-shadow:0 12px 30px rgba(255,70,115,.35)}50%{box-shadow:0 0 35px rgba(255,100,160,.85)}}
+
+.logo{font-size:74px;line-height:1;filter:drop-shadow(0 0 18px #ff638f);margin-bottom:20px;animation:pulse 1.8s infinite}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.gradient-text{background:linear-gradient(90deg,#ffb2ee,#ff6d86,#ffa6c9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(17px,3vw,25px);margin:12px 0 26px;color:#ffeaf2}
+.btn{border:0;color:white;font:600 18px Poppins;padding:16px 42px;border-radius:999px;background:linear-gradient(90deg,#ff617d,#ff5570,#ff7bb5);box-shadow:0 12px 30px rgba(255,70,115,.35);cursor:pointer;transition:.25s;min-width:230px}
+.btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 38px rgba(255,70,115,.5)}
+.btn:active{transform:scale(.97)}
+.btn.secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,210,230,.4);box-shadow:none}
+.loading-title{font-size:clamp(22px,5vw,34px);margin:15px 0}
+.progress{width:min(540px,88%);height:16px;border-radius:99px;border:1px solid rgba(255,255,255,.35);overflow:hidden;background:rgba(255,255,255,.08)}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,#ff5e82,#ff8bc9,#b8a0ff);box-shadow:0 0 15px #ff789b;border-radius:99px;transition:width .12s linear}
+.percent{font-size:21px;margin-top:15px;color:#f6dbe6}
+.result-btn{margin-top:38px;min-width:300px;background:rgba(255,255,255,.06);border:1px solid rgba(255,200,225,.35);box-shadow:none}
+.choice-card{min-height:62vh}
+.emoji-big{font-size:88px;line-height:1;margin-bottom:22px;filter:drop-shadow(0 0 20px #ff739b)}
+.question{font-size:clamp(28px,6vw,48px);font-weight:700;line-height:1.18;margin-bottom:30px}
+.choices{display:flex;gap:28px;flex-wrap:wrap;justify-content:center}
+.choice{min-width:220px}
+.dots{display:flex;gap:12px;margin-top:35px}
+.dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.3)}
+.dot.active{width:46px;border-radius:20px;background:#ff91b6;box-shadow:0 0 18px #ff91b6}
+.letter{background:rgba(255,246,250,.88);color:#4c2434;min-height:65vh}
+.script{font-family:'Dancing Script',cursive;font-size:55px;color:#ef5e7d;margin-bottom:25px}
+.message{font-size:clamp(20px,4vw,30px);line-height:1.75;max-width:650px}
+.letter .btn{margin-top:35px}
+.final-wrap{width:min(760px,100%);text-align:center}
+.final-title{font-size:clamp(38px,8vw,66px);font-weight:700;line-height:1.05;margin-bottom:22px}
+.final-copy{font-size:clamp(18px,4vw,28px);line-height:1.75}
+.ring{width:120px;height:120px;border:10px solid #ffb53e;border-radius:50%;margin:35px auto 30px;position:relative;box-shadow:0 0 25px rgba(255,178,62,.35)}
+.ring:before{content:'◆';position:absolute;left:50%;top:-38px;transform:translateX(-50%);font-size:40px;color:#ffe1ec;text-shadow:0 0 10px #fff}
+.final-btn{width:min(520px,90%);font-size:20px}
+.story-title{font-size:clamp(35px,7vw,58px);font-weight:700}
+.since{letter-spacing:7px;font-size:18px;margin:18px 0 28px;color:#f4d5e1}
+.counter{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:min(620px,100%);margin:auto}
+.timebox{border:1px solid rgba(255,220,235,.32);border-radius:28px;background:rgba(255,255,255,.055);padding:20px 8px}
+.timebox .num{font-size:48px;font-weight:700}
+.timebox .lab{font-size:16px;letter-spacing:2px;color:#edcbd9}
+.timebox.last{grid-column:2}
+.quote{font-family:'Dancing Script',cursive;font-size:clamp(28px,6vw,50px);line-height:1.1;margin:50px 0 0}
+.big-heart{font-size:62px;margin-top:20px;filter:drop-shadow(0 0 15px #ff638f)}
+.confetti{width:10px;height:5px;border-radius:2px;animation:confettiFall 4s linear forwards}
+@keyframes confettiFall{from{transform:translateY(-10vh) rotate(0)}to{transform:translateY(115vh) rotate(720deg)}}
+@media(max-width:560px){.card{border-radius:28px;padding:34px 18px}.choices{gap:14px}.choice{min-width:190px}.counter{gap:10px}.timebox{border-radius:20px;padding:15px 4px}.timebox .num{font-size:38px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="bg-glow"></div>
+<div id="particles"></div>
+
+<section class="screen active" id="intro">
+<div class="card intro-card">
+<div class="intro-heart">💗</div>
+<div class="intro-title">A Little Surprise</div>
+<div class="intro-sub">Someone special has something for you...</div>
+<button class="btn intro-btn" onclick="startStory()">This is for Dharitri 💝</button>
+</div>
+</section>
+
+<section class="screen" id="loading">
+<div class="card">
+<div class="logo">💗</div>
+<div class="loading-title" id="loadText">Initializing Love.exe...|</div>
+<div class="progress"><div id="bar"></div></div>
+<div class="percent" id="percent">0%</div>
+</div>
+</section>
+
+<section class="screen" id="found">
+<div class="card">
+<div class="logo">♥</div>
+<div class="loading-title">Found 1 Result ❤️</div>
+<div class="progress"><div style="width:100%"></div></div>
+<div class="percent">100%</div>
+<button class="btn result-btn" onclick="show('late')">Found 1 Result ❤️</button>
+</div>
+</section>
+
+<section class="screen" id="late">
+<div class="card choice-card">
+<div class="emoji-big">🌙</div>
+<div class="question">Late Night Talks?</div>
+<div class="choices">
+<button class="btn choice" onclick="show('letter1')">100%</button>
+<button class="btn choice" onclick="show('letter1')">FOREVER</button>
+</div>
+<div class="dots"><i class="dot"></i><i class="dot active"></i><i class="dot"></i></div>
+</div>
+</section>
+
+<section class="screen" id="letter1">
+<div class="card letter">
+<div class="script">for you</div>
+<div class="message">Hey Jaan...<br>Pata hai... Maine sab normally bol nahi pata...<br>Lekin aaj dil ne kaha... Risk le...<br>Kyuki kuch log baar baar nahi milte.</div>
+<button class="btn" onclick="show('letter2')">Next</button>
+</div>
+</section>
+
+<section class="screen" id="letter2">
+<div class="card letter">
+<div class="script">for you</div>
+<div class="message">Jab bhi tum online aati ho...<br>Mera mood automatically better ho jata hai.</div>
+<button class="btn" onclick="show('letter3')">Next</button>
+</div>
+</section>
+
+<section class="screen" id="letter3">
+<div class="card letter">
+<div class="script">for you</div>
+<div class="message">Honestly...<br>Tum meri life ki sabse pyari coincidence ho.</div>
+<button class="btn" onclick="show('questionIntro')">Continue ❤️</button>
+</div>
+</section>
+
+<section class="screen" id="questionIntro">
+<div class="card">
+<div class="sub">So...</div>
+<div class="question">Ek Question<br>Puchu?</div>
+<button class="btn" onclick="show('ask')">Haan Pucho</button>
+</div>
+</section>
+
+<section class="screen" id="ask">
+<div class="card">
+<div class="question gradient-text">Kya Tum Meri<br>Girlfriend Banogi?</div>
+<div class="emoji-big">💗</div>
+<button class="btn" onclick="yes()">♡ YES</button>
+<button class="btn secondary" style="margin-top:18px" onclick="show('again')">🙈 SHAYAD NAHI</button>
+</div>
+</section>
+
+<section class="screen" id="again">
+<div class="card">
+<div class="question">Kya Tum Meri<br>Girlfriend Banogi?</div>
+<div class="emoji-big">💗</div>
+<button class="btn" onclick="yes()">♡ YES</button>
+<button class="btn secondary" style="margin-top:18px" onclick="show('ask')">Ek Baar Aur 😭</button>
+</div>
+</section>
+
+<section class="screen" id="success">
+<div class="final-wrap">
+<div class="final-title gradient-text">Yayyyyyyyyyy 💜</div>
+<div class="sub">Officially...</div>
+<div class="final-copy">Ab tum meri favourite notification ho.<br><br>I Promise...<br>Har smile ki wajah banne ki puri koshish karunga.</div>
+<div class="ring"></div>
+<button class="btn final-btn" onclick="showStory()">Welcome to Our Story</button>
+</div>
+</section>
+
+<section class="screen" id="story">
+<div class="final-wrap">
+<div class="story-title gradient-text">Welcome to Our Story ❤️</div>
+<div class="since">TOGETHER SINCE</div>
+<div class="counter">
+<div class="timebox"><div class="num" id="days">0</div><div class="lab">DAYS</div></div>
+<div class="timebox"><div class="num" id="hours">0</div><div class="lab">HOURS</div></div>
+<div class="timebox"><div class="num" id="mins">0</div><div class="lab">MINUTES</div></div>
+<div class="timebox last"><div class="num" id="secs">0</div><div class="lab">SECONDS</div></div>
+</div>
+<div class="quote">Some Love Stories Start With One Click.</div>
+<div class="big-heart">❤️</div>
+</div>
+</section>
+</div>
+
+<script>
+const screens=[...document.querySelectorAll('.screen')];
+
+function show(id){
+    screens.forEach(screen=>{
+        screen.classList.toggle('active',screen.id===id);
+    });
+    if(id==='success') confetti();
+}
+
+function makeParticles(){
+    const wrap=document.getElementById('particles');
+    for(let i=0;i<55;i++){
+        const p=document.createElement('span');
+        p.className=Math.random()<.6?'particle':'heart';
+        p.textContent=p.className==='heart'?(Math.random()<.5?'♥':'❤'):'';
+        p.style.left=Math.random()*100+'%';
+        p.style.animationDuration=(5+Math.random()*9)+'s';
+        p.style.animationDelay=(-Math.random()*12)+'s';
+        if(p.className==='particle'){
+            p.style.width=p.style.height=(2+Math.random()*5)+'px';
+        }else{
+            p.style.fontSize=(13+Math.random()*24)+'px';
+        }
+        wrap.appendChild(p);
+    }
+}
+makeParticles();
+
+let progress=0;
+let loadingTimer=null;
+
+const bar=document.getElementById('bar');
+const pct=document.getElementById('percent');
+const loadText=document.getElementById('loadText');
+
+const phrases=[
+    [0,'Initializing Love.exe...|'],
+    [55,'Initializing Love.exe...|'],
+    [75,'Searching for the prettiest smile...'],
+    [95,'Searching for the prettiest smile...'],
+    [100,'Found 1 Result ❤️|']
+];
+
+function startStory(){
+    show('loading');
+    progress=0;
+    bar.style.width='0%';
+    pct.textContent='0%';
+    loadText.textContent='Initializing Love.exe...|';
+
+    if(loadingTimer) clearInterval(loadingTimer);
+
+    loadingTimer=setInterval(()=>{
+        progress++;
+        bar.style.width=progress+'%';
+        pct.textContent=progress+'%';
+
+        for(let i=phrases.length-1;i>=0;i--){
+            if(progress>=phrases[i][0]){
+                loadText.textContent=phrases[i][1];
+                break;
+            }
+        }
+
+        if(progress>=100){
+            clearInterval(loadingTimer);
+            loadingTimer=null;
+            setTimeout(()=>show('found'),700);
+        }
+    },55);
+}
+
+function yes(){
+    show('success');
+}
+
+function confetti(){
+    for(let i=0;i<110;i++){
+        const c=document.createElement('span');
+        c.className='confetti';
+        c.style.left=Math.random()*100+'%';
+        c.style.top=(-5-Math.random()*20)+'%';
+        c.style.background=['#ff6385','#ff9bc0','#bda7ff','#ffcfda'][Math.floor(Math.random()*4)];
+        c.style.width=(5+Math.random()*10)+'px';
+        c.style.height=(4+Math.random()*9)+'px';
+        c.style.animationDuration=(2.5+Math.random()*3)+'s';
+        c.style.animationDelay=Math.random()*1.8+'s';
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),6500);
+    }
+}
+
+function showStory(){
+    show('story');
+    confetti();
+    startCounter();
+}
+
+let startTime=null;
+
+function startCounter(){
+    if(startTime) return;
+    startTime=Date.now();
+
+    function tick(){
+        const sec=Math.floor((Date.now()-startTime)/1000);
+        document.getElementById('days').textContent=Math.floor(sec/86400);
+        document.getElementById('hours').textContent=Math.floor(sec%86400/3600);
+        document.getElementById('mins').textContent=Math.floor(sec%3600/60);
+        document.getElementById('secs').textContent=sec%60;
+        requestAnimationFrame(tick);
+    }
+    tick();
+}
+</script>
+</body>
+</html>
